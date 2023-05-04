@@ -1,16 +1,11 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-
 import Notiflix from 'notiflix';
-import axios, { isCancel, AxiosError } from 'axios';
-
 import PicturesApiServices from './img-sevises';
-import createGalleryMarkup from './create-gallery-markup'
-
+import createGalleryMarkup from './create-gallery-markup';
 
 const searchForm = document.getElementById('search-form');
 const galleryContainer = document.querySelector('.gallery');
-
 
 const picturesApiServices = new PicturesApiServices();
 
@@ -19,7 +14,8 @@ window.addEventListener('scroll', onScroll);
 
 function onSearch(evt) {
   evt.preventDefault();
-  console.dir(evt.currentTarget);
+
+  window.scrollTo(0, 0);
 
   picturesApiServices.name = evt.currentTarget.elements.searchQuery.value;
   picturesApiServices.resetPage();
@@ -40,28 +36,24 @@ function onSearch(evt) {
     })
     .catch(message => {
       Notiflix.Notify.failure(`Sorry, there is an error: ${message}`);
-        
     });
 
   evt.currentTarget.elements.searchQuery.value = '';
 }
-
 
 function onScroll(evt) {
   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
   if (scrollTop + clientHeight >= scrollHeight) {
     picturesApiServices
       .fetchPictures()
-      .then(({ hits }) => createGalleryMarkup(hits))
-      .catch(err => console.log(err));
+      .then(({ hits }) => {
+        if (hits.length === 0) {
+          Notiflix.Notify.info('No more pictures');
+        }
+        createGalleryMarkup(hits);
+      })
+      .catch(message => {
+        Notiflix.Notify.info(`No more pages with pictures`);
+      });
   }
 }
-
-// const { height: cardHeight } =
-//   galleryContainer.firstElementChild.getBoundingClientRect();
-//   console.log(cardHeight);
-
-// window.scrollBy({
-//   top: cardHeight * 2,
-//   behavior: 'smooth',
-// });
