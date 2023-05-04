@@ -1,9 +1,6 @@
-import Notiflix from 'notiflix';
 import axios from 'axios';
 
 const API_KEY = '35976196-061e7a31cd62ac9d42d5b46cf';
-
-// const axios = require('axios');
 
 export default class PicturesApiServices {
   constructor() {
@@ -25,27 +22,10 @@ export default class PicturesApiServices {
 
       return resp.data;
     } catch (error) {
-        console.log(error);
+      console.log(error);
       throw new Error(error.message);
     }
-
-        // return await axios
-        //   .get(BASE_URL)
-        //   .then(response => {
-        //     if (!response.status === 200) {
-        //       throw new Error(response.message);
-        //     }
-
-        //     return response.data;
-        //   })
-        //   .then(data => {
-        //     this.incrementPage();
-        //     return data;
-        //   }).catch(({ message }) => {
-        //          throw new Error(message);
-        //   });
-      }
-  
+  }
 
   incrementPage() {
     this.page += 1;
