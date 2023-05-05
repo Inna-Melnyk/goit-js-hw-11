@@ -15,12 +15,12 @@ const gallery = new SimpleLightbox('.photo-card a', {
 });
 
 searchForm.addEventListener('submit', onSearch);
-        window.addEventListener('scroll', onScroll);
 
 function onSearch(evt) {
   evt.preventDefault();
 
   window.scrollTo(0, 0);
+  window.addEventListener('scroll', onScroll);
 
   picturesApiServices.name = evt.currentTarget.elements.searchQuery.value;
   picturesApiServices.resetPage();
@@ -28,25 +28,21 @@ function onSearch(evt) {
   picturesApiServices
     .fetchPictures()
     .then(({ hits, totalHits }) => {
-      if (hits.length === 0) {    
-
+      if (hits.length === 0) {
         Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.'
         );
       } else {
         Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
-      
 
-      galleryContainer.innerHTML = '';
-      createGalleryMarkup(hits);
+        galleryContainer.innerHTML = '';
+        createGalleryMarkup(hits);
         gallery.refresh();
-
-}
+      }
     })
     .catch(message => {
       Notiflix.Notify.failure(`Sorry, there is an error: ${message}`);
     });
-  
 
   evt.currentTarget.elements.searchQuery.value = '';
 }
@@ -60,16 +56,13 @@ function onScroll(evt) {
         if (hits.length === 0) {
           Notiflix.Notify.info('No more pictures');
           window.removeEventListener('scroll', onScroll);
-
         }
         createGalleryMarkup(hits);
         gallery.refresh();
-
       })
       .catch(message => {
         Notiflix.Notify.info(`No more pages with pictures`);
         window.removeEventListener('scroll', onScroll);
-
       });
   }
 }
