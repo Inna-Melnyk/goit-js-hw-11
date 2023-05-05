@@ -58,14 +58,21 @@ a {
   align-items: center;
 
 
-  top: 0;
+  top: 2;
   right: 0;
-  padding: 0,5;
+  padding: 0,5px;
  
-  color:rgb(69, 63, 73);
-  border: 1.5px solid rgb(82, 81, 81);
+  background-color:transparent;
+  border: none;
 
   cursor: pointer;
+
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+}
+.search-btn:hover {
+    transform: scale(1.05);
+    color: green;
 }
 
 .gallery-wrapper {

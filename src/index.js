@@ -15,6 +15,7 @@ const gallery = new SimpleLightbox('.photo-card a', {
 });
 
 searchForm.addEventListener('submit', onSearch);
+        window.addEventListener('scroll', onScroll);
 
 function onSearch(evt) {
   evt.preventDefault();
@@ -39,7 +40,6 @@ function onSearch(evt) {
       galleryContainer.innerHTML = '';
       createGalleryMarkup(hits);
         gallery.refresh();
-        window.addEventListener('scroll', onScroll);
 
 }
     })
