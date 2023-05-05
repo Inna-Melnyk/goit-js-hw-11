@@ -35,12 +35,4 @@ export default function createGalleryMarkup(arr) {
     .join('');
 
   galleryContainer.insertAdjacentHTML('beforeend', markup);
-
-  const gallery = new SimpleLightbox('.photo-card a', {
-    captions: true,
-    captionDelay: 150,
-    captionsData: 'alt',
-  });
-
-  gallery.refresh();
 }
